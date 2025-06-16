@@ -21,9 +21,9 @@ public_users.get('/',function (req, res) {
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
   const isbn = req.params.isbn;
-  // let matched_isbn = books.filter((book) => book.isbn === isbn);
+  // let matched_isbn = (books).filter((book) => book.isbn === isbn);
   // res.send(matched_isbn)
-  res.send(books[isbn]);
+  res.send(JSON.stringify(books[isbn],null,4));
   // return res.status(300).json({message: "Yet to be implemented"});
  });
   
@@ -31,9 +31,9 @@ public_users.get('/isbn/:isbn',function (req, res) {
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
   const author = req.params.author;
-  // let matched_author = Object.values(books).filter((book) => book.author === author);
-  // res.send(matched_author);
-  res.send(books[author]);
+  let matched_author = Object.values(books).filter((book) => book.author === author);
+  res.send(JSON.stringify(matched_author, null,4));
+  // res.send(books[author]);
   // return res.status(300).json({message: "Yet to be implemented"});
 });
 
@@ -41,9 +41,9 @@ public_users.get('/author/:author',function (req, res) {
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
   const title = req.params.title;
-  // let matched_title = books.filter((book) => book.title === title);
-  // res.send(matched_title);
-  res.send(books[title])
+  let matched_title = Object.values(books).filter((book) => book.title === title);
+  res.send(JSON.stringify(matched_title,null,4));
+  // res.send(books[title])
 
   // return res.status(300).json({message: "Yet to be implemented"});
 });
@@ -51,10 +51,17 @@ public_users.get('/title/:title',function (req, res) {
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
-  const review = req.params.review;
-  // let matched_review = Object.values(books).filter((book) => book.review === review);
-  // res.send(matched_review);
-  res.send(books[review])
+  const book_review = req.params.review;
+  const review_isbn = req.params.isbn;
+  const book_isbn = books[review_isbn];
+  
+  if (book_isbn) {
+    let matched_review_isbn = Object.values(books).filter((book) => book.review === book_review);
+    res.send(JSON.stringify(book_isbn,null,4));
+  }
+
+  
+  // res.send(books[review])
   // return res.status(300).json({message: "Yet to be implemented"});
 });
 

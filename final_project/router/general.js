@@ -4,9 +4,11 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+let users =[];
+
 const doesExist = (username) =>{
   let usernameExists = users.filter((user)=>{
-    return user.username ===username;
+    return user.username === username;
   });
   return usernameExists.length > 0;
 }
@@ -18,13 +20,13 @@ public_users.post("/register", (req,res) => {
 
   if(username && password){
     if(!doesExist){
-      users.push({"username":username, "password":password});
+      users.push({ "username": username, "password": password });
       return res.status(200).json({message: "User successfully registered, now you can login."});
     } else{
-      return res.status(404).json({message:"Unable to register user."})
+      return res.status(404).json({message:"User already exists."})
     }
   }
-  return res.status(300).json({message: "Yet to be implemented"});
+  return res.status(404).json({message: "Unable to register user"});
 });
 
 // Get the book list available in the shop
@@ -77,7 +79,6 @@ public_users.get('/review/:isbn',function (req, res) {
     res.send(JSON.stringify(book_isbn,null,4));
   }
 
-  
   // res.send(books[review])
   // return res.status(300).json({message: "Yet to be implemented"});
 });

@@ -21,7 +21,7 @@ public_users.post("/register", (req,res) => {
   //Write your code here
   const username = req.body.username;
   const password = req.body.password;
-    console.log(username, password,users)
+
 
   if(username && password){
     if(!doesExist(username)){
@@ -81,7 +81,7 @@ public_users.get('/review/:isbn',function (req, res) {
   
   if (book_isbn) {
     let matched_review_isbn = Object.values(books).filter((book) => book.review === book_review);
-    res.send(JSON.stringify(book_isbn,null,4));
+    res.send(JSON.stringify(book_isbn['reivews'],null,4));
   }
 
   // res.send(books[review])
